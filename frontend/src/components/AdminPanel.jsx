@@ -11,13 +11,11 @@ const AdminPanel = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterAddress, setFilterAddress] = useState("");
 
-  useEffect(() => {
-    fetchProfiles();
-  }, []);
+  
 
   const fetchProfiles = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/profiles", {
+      const response = await axios.get("https://bynry-case-study-frontend.onrender.com/api/profiles", {
         params: {
           name: searchQuery,
           address: filterAddress,
@@ -28,10 +26,13 @@ const AdminPanel = () => {
       console.error("Error fetching profiles:", error);
     }
   };
+  useEffect(() => {
+    fetchProfiles();
+  }, [searchQuery, filterAddress]);
 
   const handleAddProfile = async (formData) => {
     try {
-      await axios.post("http://localhost:5000/api/profiles", formData);
+      await axios.post("https://bynry-case-study-frontend.onrender.com/api/profiles", formData);
       fetchProfiles();
       setShowProfileForm(false);
     } catch (error) {
@@ -42,7 +43,7 @@ const AdminPanel = () => {
   const handleEditProfile = async (editedProfile) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/profiles/${editedProfile._id}`,
+        `https://bynry-case-study-frontend.onrender.com/api/profiles/${editedProfile._id}`,
         editedProfile
       );
       fetchProfiles();
@@ -54,7 +55,7 @@ const AdminPanel = () => {
 
   const handleDeleteProfile = async (profileId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/profiles/${profileId}`);
+      await axios.delete(`https://bynry-case-study-frontend.onrender.com/api/profiles/${profileId}`);
       fetchProfiles();
     } catch (error) {
       console.error("Error deleting profile:", error);
